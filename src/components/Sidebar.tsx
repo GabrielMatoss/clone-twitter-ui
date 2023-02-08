@@ -10,6 +10,8 @@ import {
 } from "phosphor-react";
 import TwitterLogo from "../assets/logo-twitter.svg";
 
+import { Link } from "react-router-dom";
+
 import "./Sidebar.css";
 export function Sidebar() {
   return (
@@ -17,10 +19,10 @@ export function Sidebar() {
       <img className="logo" src={TwitterLogo} alt="Logo" />
 
       <nav className="main-navigation">
-        <a className="active" href="">
+        <Link className="active" to="/">
           <House weight="fill" />
           Home
-        </a>
+        </Link>
         <a href="">
           <Hash />
           Explore
