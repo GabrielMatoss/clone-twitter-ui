@@ -1,9 +1,9 @@
-import { FormEvent, useState } from "react";
+import { PaperPlaneRight } from "phosphor-react";
+import { FormEvent, KeyboardEvent, useState } from "react";
 import { Header } from "../components/Header";
 import { Separator } from "../components/Separator";
 import { Tweet } from "../components/Tweet";
 import "./Status.css";
-
 
 export function Status() {
   const [newAnswers, setNewAnswers] = useState("");
@@ -13,12 +13,18 @@ export function Status() {
     "Parabéns pelo progresso.",
   ]);
 
-  function createNewAnswer(event: FormEvent){
+  function createNewAnswer(event: FormEvent) {
     event.preventDefault();
-    setAnswers([newAnswers, ...answers ]);
+    setAnswers([newAnswers, ...answers]);
     setNewAnswers("");
   }
 
+  function handleHotKeySubmit(event: KeyboardEvent) {
+    if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+      setAnswers([newAnswers, ...answers]);
+      setNewAnswers("");
+    }
+  }
 
   return (
     <main className="status">
@@ -30,17 +36,21 @@ export function Status() {
       <form onSubmit={createNewAnswer} className="answer-tweet-form">
         <label htmlFor="tweet">
           <img src="https://github.com/GabrielMatoss.png" alt="Gabriel Matos" />
-          <textarea 
-          value={newAnswers}
-          id="tweet" 
-          placeholder="Tweet yout answer" 
-          onChange={(event) => {
-            setNewAnswers(event.target.value);
-          }}
+          <textarea
+            value={newAnswers}
+            onKeyDown={handleHotKeySubmit}
+            id="tweet"
+            placeholder="Tweet yout answer"
+            onChange={(event) => {
+              setNewAnswers(event.target.value);
+            }}
           />
         </label>
 
-        <button type="submit">Answer</button>
+        <button type="submit">
+          <PaperPlaneRight />
+          <span>Answer</span>
+        </button>
       </form>
 
       {answers.map((answer) => {
